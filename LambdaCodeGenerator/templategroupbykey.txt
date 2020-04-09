@@ -1,0 +1,34 @@
+
+	@Test
+	public void test%1ForEach() throws Throwable {
+		log.info("test%1 Before---------------------------------------");
+		MassiveDataPipeline<String,String> datapipeline = MassiveDataPipeline.newStreamHDFS(hdfsfilepath, airlinesample);
+		sum = 0;
+		datapipeline.%2forEach(lsttuples->{
+				for(Tuple2 tuple2:lsttuples){
+					sum += ((List)tuple2.v2).size();
+				}
+			
+		},null);
+		
+		assertEquals(%3,sum);
+		
+		log.info("test%1 After---------------------------------------");
+	}	
+	
+	
+	@Test
+	public void test%1Collect() throws Throwable {
+		log.info("test%1 Before---------------------------------------");
+		MassiveDataPipeline<String,String> datapipeline = MassiveDataPipeline.newStreamHDFS(hdfsfilepath, airlinesample);
+		List<List<Tuple2>> data = (List) datapipeline.%2collect(toexecute,null);
+		int sum = 0;
+		for (List<Tuple2> lsttuples : data) {
+			for(Tuple2 tuple2:lsttuples){
+				sum += ((List)tuple2.v2).size();
+			}
+		}
+		assertEquals(%3,sum);
+		
+		log.info("test%1 After---------------------------------------");
+	}		

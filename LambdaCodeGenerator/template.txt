@@ -1,0 +1,47 @@
+	@Test
+	public void test%1Count() throws Throwable {
+		log.info("test%1Count Before---------------------------------------");
+		MassiveDataPipeline<String,String> datapipeline = MassiveDataPipeline.newStreamHDFS(hdfsfilepath, airlinesample);
+		List<List<Long>> data = (List) datapipeline.%2count(null);
+		long sum = 0;
+		for(List<Long> partitioneddata:data) {
+			for(Long count:partitioneddata){
+				log.info(count);
+				sum+=count;
+			}
+		}
+		assertEquals(%3,sum);
+		
+		log.info("test%1Count After---------------------------------------");
+	}
+	
+	
+	@Test
+	public void test%1ForEach() throws Throwable {
+		log.info("test%1 Before---------------------------------------");
+		MassiveDataPipeline<String,String> datapipeline = MassiveDataPipeline.newStreamHDFS(hdfsfilepath, airlinesample);
+		sum = 0;
+		datapipeline.%2forEach(lis->{
+			sum+=((List)lis).size();
+		},null);
+		
+		assertEquals(%3,sum);
+		
+		log.info("test%1 After---------------------------------------");
+	}	
+	
+	
+	@Test
+	public void test%1Collect() throws Throwable {
+		log.info("test%1 Before---------------------------------------");
+		MassiveDataPipeline<String,String> datapipeline = MassiveDataPipeline.newStreamHDFS(hdfsfilepath, airlinesample);
+		List<List> data = (List) datapipeline.%2collect(toexecute,null);
+		int sum = 0;
+		for(List partitioneddata:data) {
+			log.info(partitioneddata.size());
+			sum+=partitioneddata.size();
+		}
+		assertEquals(%3,sum);
+		
+		log.info("test%1 After---------------------------------------");
+	}		
